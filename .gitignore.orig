@@ -1,0 +1,23 @@
+<<<<<<< HEAD
+#ignore thumbnails created by windows
+Thumbs.db
+*.class
+# Package Files #
+*.war
+*.ear
+*.tpignore
+pom.xml
+.settings/
+.classpath
+.project
+*.log
+target/
+!./lib
+=======
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+>>>>>>> 2c1376f0271c54d993f5c8383014732ad090f4c8
