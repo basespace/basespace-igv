@@ -1,3 +1,5 @@
+# BaseSpace IGV
+
 [IGV](http://www.broadinstitute.org/igv/) is a fully featured genome browser that allows you to visualize your sequence data in great detail. We’ve modified IGV to display alignment and variant data from BaseSpace (BAM and VCF files). This allows you to perform variant analysis after launching Resequencing or Amplicon workflows in BaseSpace. IGV retains all of its native functions, including loading data from your local computer.
 
 **BaseSpace Data in IGV**
