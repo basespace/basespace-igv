@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp codebase="$$codebase" href="$$name">
+  <information>
+    <title>bpm-client</title>
+    <vendor>Illumina, Inc.</vendor>
+    <description>BPM Manufacturing LIMS client</description>
+    <description kind="short">BPM Manufacturing LIMS client</description>
+    <description kind="tooltip">BPMClient</description>
+    <icon href="discovery.gif" width="64" height="32"/>
+    <shortcut online="true">
+      	<desktop/>
+    </shortcut>
+#if($offlineAllowed)
+    <offline-allowed/>
+#end
+  </information>
+  <security>
+     <all-permissions/>
+  </security>
+  <resources>
+     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se" initial-heap-size="32m" max-heap-size="768m"/>
+	$dependencies
+  </resources>
+  <application-desc main-class="$mainClass"/>
+</jnlp>

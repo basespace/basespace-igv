@@ -1,0 +1,14 @@
+#ignore thumbnails created by windows
+Thumbs.db
+*.class
+# Package Files #
+*.war
+*.ear
+*.tpignore
+pom.xml
+.settings/
+.classpath
+.project
+*.log
+target/
+!./lib
