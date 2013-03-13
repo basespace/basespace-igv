@@ -10,7 +10,7 @@ import com.illumina.basespace.BaseSpaceConfiguration;
 
 public class IlluminaIGVProperties extends Properties
 {
-    public static final String SYSTEM_NAMESPACE = "illumina.igv.basespace.";
+    public static final String SYSTEM_NAMESPACE = "jnlp.illumina.igv.basespace.";
     public static final String VERSION = SYSTEM_NAMESPACE + "version";
     public static final String ROOT_URI = SYSTEM_NAMESPACE + "api.root.uri";
     public static final String ACCESS_TOKEN_FRAGMENT = SYSTEM_NAMESPACE + "access.token.fragment";
