@@ -1,0 +1,90 @@
+<project name="IGV" default="sign-jars" basedir=".">
+
+	<property name="basespace-igv-version" value="2.1.0"/>	
+	<property name="java.sdk.version" value="2.1.0-SNAPSHOT"/>	
+	<property name="igv.version" value="2.3.5"/>	
+	
+	<property name="keystore" value="${basedir}/../keystore/basespace.ks"/>
+	<property name="alias" value="basespace"/>
+	<property name="store-password" value="basespace"/>
+	<property name="key-password" value="gfRkFCEyW1"/>	
+	
+	<property name="webstart.dir" value="${basedir}/webstart"/>
+ 	<property name="basespace.target" value="${basedir}/target"/>
+	<property name="workspace.root" value="C:/Source/IGV"/>
+	
+	<property name="sdk.basedir" value="${workspace.root}/ilmn-basespace-java-sdk"/>
+	<property name="sdk.target" value="${sdk.basedir}/target"/>
+	<property name="sdk.lib" value="${sdk.basedir}/lib"/>	
+	  
+    <property name="igv.basedir" value="${workspace.root}/broad-igv-${igv.version}"/>
+  	<property name="igv.deploy.dir" value="${igv.basedir}/IGV-dist"/>
+	
+  	<property name="basespace.jar" value="${webstart.dir}/basespace-igv-integration-${basespace-igv-version}.jar"/>
+	<property name="sdk.jar" value="${webstart.dir}/basespace-sdk-${java.sdk.version}.jar"/>
+	<property name="igv.jar" value="${webstart.dir}/igv.jar"/>
+	
+	<property name="manifest.properties" value="addToManifest.txt"/>
+	
+	
+    <target name="clean">
+        <delete dir="${webstart.dir}"/>
+    </target>
+
+	<target name="copy-files" depends="clean">
+		  <copy todir="${webstart.dir}">
+		    <fileset dir="${igv.basedir}/lib">
+		      <include name="**/*.jar"/>
+		    </fileset>
+		  </copy>
+		  <copy todir="${webstart.dir}">
+		    <fileset dir="${basespace.target}">
+		      <include name="**/*.jar"/>
+		    </fileset>
+		  </copy>
+		  <copy todir="${webstart.dir}">
+		    <fileset dir="${sdk.target}">
+		      <include name="**/*.jar"/>
+		    </fileset>
+		  </copy>		
+		  <copy todir="${webstart.dir}">
+		    <fileset dir="${igv.deploy.dir}">
+		      <include name="**/*.jar"/>
+		    </fileset>
+		  </copy>		  
+		  <copy todir="${webstart.dir}">
+		    <fileset dir="${sdk.lib}">
+		      <include name="**/*.jar"/>
+		    </fileset>
+		  </copy>			
+	</target>
+	
+	
+	<target name="add-permissions-to-manifest" depends="copy-files">
+		<apply executable="jar"> 
+		    <arg value="-ufm"/> 
+		    <srcfile/> 
+		    <arg value="${manifest.properties}"/> 
+		    <fileset dir="${webstart.dir}" includes="*.jar"/> 
+		  </apply> 			
+	</target>
+
+
+    <!-- Sign all jars if a keystore is defined -->
+    <target name="sign-jars" depends="add-permissions-to-manifest">
+    	
+    
+    	<signjar
+    	    alias="${alias}" keystore="${keystore}"
+    	    storepass="${store-password}"
+    		keypass="${key-password}"
+    	    >
+    	  <path>
+    	    <fileset dir="${webstart.dir}">
+		      <include name="**/*.jar"/>
+		    </fileset>
+    	  </path>
+    	</signjar>
+    </target>
+
+</project>

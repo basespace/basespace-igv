@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?><jnlp codebase=".">
+	<information>
+		<title>IGV</title>
+		<vendor>Illumina,Inc.</vendor>
+		<description>Illumina IGV</description>
+		<description kind="short">Illumina IGV</description>
+		<description kind="tooltip">IGV</description>
+   		<icon href="images/igv_57.png" kind="default"/>     
+   		<shortcut online="false">        
+   		<desktop/>            
+   		<menu submenu="Illumina">            
+   		<menu submenu="IGV"/>            
+   		</menu>    
+   		</shortcut>		
+		<!--
+		<offline-allowed/>
+		-->
+		
+	</information>
+
+
+	<resources>
+        <j2se href="http://java.sun.com/products/autodl/j2se" initial-heap-size="512m" max-heap-size="1024m" version="1.6+"/>
+
+            <jar href='webstart/AbsoluteLayout.jar' />
+            <jar href='webstart/basespace-igv-integration-2.1.0.jar' />
+            <jar href='webstart/basespace-sdk-2.1.0-SNAPSHOT.jar'/>
+            <jar href='webstart/batik-awt-util.jar' />
+            <jar href='webstart/batik-bridge.jar' />
+            <jar href='webstart/batik-codec.jar' />
+            <jar href='webstart/batik-css.jar' />
+            <jar href='webstart/batik-dom.jar' />
+            <jar href='webstart/batik-ext.jar' />
+            <jar href='webstart/batik-gui-util.jar' />
+            <jar href='webstart/batik-gvt.jar' />
+            <jar href='webstart/batik-parser.jar' />
+            <jar href='webstart/batik-svg-dom.jar' />
+            <jar href='webstart/batik-svggen.jar' />
+            <jar href='webstart/batik-transcoder.jar' />
+            <jar href='webstart/batik-util.jar' />
+            <jar href='webstart/batik-xml.jar' />
+			<jar href='webstart/bcprov-debug-jdk15on-147.jar' />
+			<jar href='webstart/cofoja-1.0-20110609.jar' />      
+            <jar href='webstart/commons-io-2.1.jar' />
+            <jar href='webstart/commons-jexl-2.1.1.jar' />
+            <jar href='webstart/commons-logging-1.1.1.jar' />
+            <jar href='webstart/commons-math-2.2.jar' />
+            <jar href='webstart/concurrent.jar' />
+            <jar href='webstart/goby-io-igv.jar' />
+			<jar href='webstart/guava-13.0.1.jar' />
+			<jar href='webstart/igv.jar' />
+   	        <jar href='webstart/jackson-annotations-2.0.1.jar' />
+            <jar href='webstart/jackson-core-2.0.1.jar' />
+            <jar href='webstart/jackson-databind-2.0.1.jar' />			
+			<jar href='webstart/Jama-1.0.2.jar' />	
+			<jar href='webstart/jargs.jar' />	
+			<jar href='webstart/jcommon-1.0.16.jar' />	  
+   			<jar href='webstart/jersey-client-1.12.jar' />
+   			<jar href='webstart/jersey-core-1.12.jar' />  					
+    		<jar href='webstart/jfreechart-1.0.13.jar' />
+   			<jar href='webstart/jgrapht-jdk1.6.jar' />
+    		<jar href='webstart/jide-oss-3.4.4.jar' />
+   			<jar href='webstart/jlfgr-1_0.jar' />
+   			<jar href='webstart/junit-4.10.jar' />
+   			<jar href='webstart/log4j-1.2.15.jar' />
+   			<jar href='webstart/mysql-connector-java-3.1.14-bin.jar' />
+			<jar href='webstart/picard-1.91.jar' />   		   			
+			<jar href='webstart/sam-1.91.jar' />   			
+   			<jar href='webstart/sqlitejdbc-v056.jar' />   		
+   			<jar href='webstart/swing-layout-1.0.jar' />
+   			<jar href='webstart/tribble-1.91.jar' />
+   			<jar href='webstart/variant-1.91.jar' />
+   			<jar href='webstart/xml-apis-1.3.04.jar' />
+            <jar href='webstart/xml-apis-ext-1.3.04.jar' />
+	
+
+
+        	<property name="sun.java2d.noddraw" value="true"/>
+				
+	</resources>
+
+	<application-desc main-class="com.illumina.basespace.igv.BaseSpaceMain">
+		<argument>illumina.igv.basespace.api.root.uri=https://api-hoth.basespace.illumina.com</argument>
+		<argument>illumina.igv.basespace.version=v1pre3</argument>	
+		<argument>illumina.igv.basespace.access.token.fragment=/oauthv2/token</argument>		
+		<argument>illumina.igv.basespace.authorization.fragment=/oauthv2/deviceauthorization</argument>	
+		<argument>illumina.igv.basespace.authorization.scope="read global"</argument>	
+		<argument>illumina.igv.basespace.access.token=50208959271340c789214d90fccd9ec6</argument>	
+		<argument>illumina.igv.basespace.project=472472</argument>			
+		<argument>illumina.igv.basespace.appresult=-1</argument>		
+		<argument>illumina.igv.basespace.debug=true</argument>		
+	</application-desc>
+	
+	<security> 
+        <j2ee-application-client-permissions/> 
+        <all-permissions/>   
+	</security> 
+	
+</jnlp>
