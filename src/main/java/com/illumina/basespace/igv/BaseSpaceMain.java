@@ -181,6 +181,10 @@ public class BaseSpaceMain extends Main implements SingleInstanceListener
         return clients.get(id).getApiClient();
     }
 
+    /**
+     * Do not show access token in log. 
+     * @param args
+     */
     public void createBaseSpaceClient(String[] args)
     {
         if (args == null || args.length == 0)
@@ -192,7 +196,8 @@ public class BaseSpaceMain extends Main implements SingleInstanceListener
         int index = 0;
         for (String arg : args)
         {
-       		logger.info("\t[" + (++index) + "]=" + arg);
+        	if(arg.indexOf("token") < 0)
+        		logger.info("\t[" + (++index) + "]=" + arg);
         }
 
         final BaseSpaceConfiguration config = BaseSpaceConfiguration.create(args);

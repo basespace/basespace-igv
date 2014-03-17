@@ -22,9 +22,9 @@ import com.illumina.basespace.igv.ui.BaseSpaceHelper;
 import com.illumina.basespace.igv.ui.ImageProvider;
 import com.illumina.basespace.param.FileParams;
 
-public class AppResultNode extends BaseSpaceTreeNode<AppResult>
+public class AppResultNode extends BaseSpaceTreeNode<AppResultCompact>
 {
-    public AppResultNode(AppResult bean,UUID clientId,ClientContext clientContext)
+    public AppResultNode(AppResultCompact bean,UUID clientId,ClientContext clientContext)
     {
         super(bean,clientId,clientContext);
     }
@@ -105,28 +105,10 @@ public class AppResultNode extends BaseSpaceTreeNode<AppResult>
         worker.execute();
 
     }
-    
-
-    protected String findReferencedSample()
-    {
-        if (getBean().getReferences() == null || getBean().getReferences().length == 0)return null;
-        for(Reference ref:getBean().getReferences())
-        {
-            if (ref.getRelation() != null && ref.getRelation().equalsIgnoreCase("Using")
-                    && ref.getType() != null && ref.getType().equalsIgnoreCase("Sample")
-                    && ref.getContent() != null)
-                    
-            {
-                return ref.getContent().getSampleId();
-            }
-        }
-        return null;
-        
-    }
 
 
     @Override
-    public void renderNode(JTree tree, JLabel label, AppResult value, boolean selected, boolean expanded, boolean leaf,
+    public void renderNode(JTree tree, JLabel label, AppResultCompact value, boolean selected, boolean expanded, boolean leaf,
             int row, boolean hasFocus)
     {
        

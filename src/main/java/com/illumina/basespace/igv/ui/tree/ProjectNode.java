@@ -16,13 +16,11 @@ import javax.swing.SwingWorker;
 
 import org.broad.igv.ui.IGV;
 
-import com.illumina.basespace.entity.AppResult;
 import com.illumina.basespace.entity.AppResultCompact;
 import com.illumina.basespace.entity.AppSession;
 import com.illumina.basespace.entity.AppSessionCompact;
 import com.illumina.basespace.entity.Project;
 import com.illumina.basespace.entity.ProjectCompact;
-import com.illumina.basespace.igv.BaseSpaceConstants;
 import com.illumina.basespace.igv.BaseSpaceMain;
 import com.illumina.basespace.igv.BaseSpaceMain.ClientContext;
 import com.illumina.basespace.igv.ui.BaseSpaceHelper;
@@ -38,6 +36,7 @@ public class ProjectNode extends BaseSpaceTreeNode<Project>
     private int maxResults = 128;
     private JPopupMenu menu;
     private static final String INPUT_PROJECT = "Input.project-id";
+    private static final String OUTPUT_PROJECT = "Output.projects";
     
     private static QueryParams params;
     static
@@ -145,7 +144,7 @@ public class ProjectNode extends BaseSpaceTreeNode<Project>
             Property[]props = fullAppSession.properties();
             for(Property prop:props)
             {
-                if (prop.getType().equalsIgnoreCase(TypeHelper.PROPERTY_PROJECT_ARRAY))
+                if (prop.getType().equalsIgnoreCase(TypeHelper.PROPERTY_PROJECT_ARRAY) && prop.getName().equalsIgnoreCase(OUTPUT_PROJECT) )
                 {
                     ProjectReference projectRef = (ProjectReference)prop;
                     if (projectRef.getContent().getId().equals(getBean().getId()))
@@ -162,53 +161,15 @@ public class ProjectNode extends BaseSpaceTreeNode<Project>
             
             params.setLimit(maxResults);
             appResults.addAll(Arrays.asList(BaseSpaceMain.instance().getApiClient(getClientId()).getAppResults(getBean(), params).items()));
+            appSessionCompactList.addAll(Arrays.asList(BaseSpaceMain.instance().getApiClient(getClientId()).getAppSessions(getConfig().getProjectId(), params).items()));
             List<String>appSessionIds = new ArrayList<String>(512);
             BrowserDialog.instance().setWorkMax( appResults.size());
-            int count = 0;
-            
-            //TODO: Appresult Compact includes the AppsessionId
-            for (AppResultCompact obj : appResults)
-            {
-                worker.publishProgress(new ProgressReport(null,++count));
-                if (obj.getStatus().equalsIgnoreCase(BaseSpaceConstants.STATUS_COMPLETE))
-                {
-                    AppResult fullAppResult = getClientContext().getApiClient().getAppResult(obj.getId()).get();
-                    if (fullAppResult.getAppSession() != null)
-                    {
-                        try
-                        {
-                            AppSession fullAppSession = getClientContext().getApiClient().getAppSession(fullAppResult.getAppSession().getId()).get();
-                            Property[]props = fullAppSession.properties();
-                            for(Property prop:props)
-                            {
-                                if (prop.getType().equalsIgnoreCase(TypeHelper.PROPERTY_PROJECT) && prop.getName().equalsIgnoreCase(INPUT_PROJECT) )
-                                {
-                                    ProjectReference projectRef = (ProjectReference)prop;
-                                    if (projectRef.getContent().getId().equals(getBean().getId()) && !appSessionIds.contains(fullAppResult.getAppSession().getId()))
-                                    {
-                                        worker.publishProgress(new ProgressReport(fullAppResult.getAppSession().getName()));
-                                        appSessions.add(fullAppSession);
-                                        appSessionIds.add(fullAppResult.getAppSession().getId());
-                                    }
-                                    
-                                }
-                           }
-                        }
-                        catch(Throwable t)
-                        {
-                            t.printStackTrace();
-                            throw new RuntimeException(t);
-                        }
-                    
-                    }
-                }
-            } 
         }
        
 
 		List<BaseSpaceTreeNode<?>> decorators = new ArrayList<BaseSpaceTreeNode<?>>(appSessions.size());
-     
-        for (AppSession obj : appSessions)
+
+		for (AppSessionCompact obj : appSessionCompactList)
         {
             AppSessionNode an = new AppSessionNode(obj,getClientId(),getClientContext()); 
             decorators.add(an);

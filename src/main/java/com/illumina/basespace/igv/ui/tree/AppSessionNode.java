@@ -72,32 +72,9 @@ public class AppSessionNode extends BaseSpaceTreeNode<AppSessionCompact>
                 {
                  
                     List<AppResultCompact> entities = new ArrayList<AppResultCompact>();
-
-                    //System.out.println("Load full appsession id=" + getBean().getId());
-                   // AppSession fullAppSession = getClientContext().getApiClient().getAppSession(getBean().getId()).get();
+//                    List<AppResultCompact> appResultCompactList = new ArrayList<AppResultCompact>();
+                    entities.addAll(Arrays.asList(BaseSpaceMain.instance().getApiClient(getClientId()).getAppResults(getBean(), params).items()));
                     
-                    
-                    for(Property<?> property:getBean().properties())
-                    {
-                        if (AppResultReference.class.isAssignableFrom(property.getClass()))
-                        {
-                            AppResultReference appResultRef = (AppResultReference)property;
-                       
-                            for(AppResultCompact appResult:appResultRef.getItems())
-                            {
-                                entities.add(appResult);
-                                
-                                /*
-                                //System.out.println("\tAppSession " + getBean().getId() + " has appresult reference id=" + appResult.getId());
-                                if (thisAppResultId != null && thisAppResultId.equals(appResult.getId()))
-                                {
-                                    entities.add(appResult);
-                                }
-                                */
-                               
-                            }
-                        }
-                    }
                     BrowserDialog.instance().setWorkMax(entities.size());
                     List<String>appResultIDs = new ArrayList<String>();
                     List<BaseSpaceTreeNode<?>> decorators = new ArrayList<BaseSpaceTreeNode<?>>(entities.size());
@@ -107,26 +84,18 @@ public class AppSessionNode extends BaseSpaceTreeNode<AppSessionCompact>
                         count++;
                         if (obj.getStatus().equalsIgnoreCase(BaseSpaceConstants.STATUS_COMPLETE) && !appResultIDs.contains(obj.getId()))
                         {
-                            AppResult fullAppResult = null;
-							try {
-								fullAppResult = getClientContext().getApiClient().getAppResult(obj.getId()).get();
-							} catch (BaseSpaceException e) {
-								// Do not add appresults if 403 forbidden error code is returned. 
-								if(e.getErrorCode() == 403){
-									e.printStackTrace();
-									continue;
-								}
-							}
-                            FileCompact[]files = BaseSpaceMain.instance().getApiClient(getClientId()).getFiles(fullAppResult, fileParams).items();
+                            FileCompact[]files = BaseSpaceMain.instance().getApiClient(getClientId()).getFiles(obj, fileParams).items();
                             if (files.length > 0)
                             {
                                 publish(new ProgressReport(obj.getName(),count));
-                                AppResultNode an = new AppResultNode(fullAppResult,getClientId(),getClientContext()); 
+                                AppResultNode an = new AppResultNode(obj,getClientId(),getClientContext()); 
                                 decorators.add(an);
                                 appResultIDs.add(obj.getId());
                             }
                         }
                     }
+
+
                     return decorators;
                 }
                 catch(Throwable t)
