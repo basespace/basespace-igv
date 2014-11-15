@@ -4,16 +4,16 @@
 	<property name="java.sdk.version" value="2.1.0-SNAPSHOT"/>	
 	<property name="igv.version" value="2.3.5"/>	
 	
-	<property name="keystore" value="${basedir}/../keystore/basespace.ks"/>
+	<property name="keystore" value="${basedir}/../igv_keystore/basespace.keystore"/>
 	<property name="alias" value="basespace"/>
 	<property name="store-password" value="basespace"/>
-	<property name="key-password" value="gfRkFCEyW1"/>	
+	<property name="key-password" value="gfRkFCEyW1"/>
 	
 	<property name="webstart.dir" value="${basedir}/webstart"/>
  	<property name="basespace.target" value="${basedir}/target"/>
-	<property name="workspace.root" value="C:/Source/IGV"/>
+	<property name="workspace.root" value="/development/source/"/>
 	
-	<property name="sdk.basedir" value="${workspace.root}/ilmn-basespace-java-sdk"/>
+	<property name="sdk.basedir" value="${workspace.root}/basespace-java-sdk"/>
 	<property name="sdk.target" value="${sdk.basedir}/target"/>
 	<property name="sdk.lib" value="${sdk.basedir}/lib"/>	
 	  
@@ -46,17 +46,17 @@
 		    <fileset dir="${sdk.target}">
 		      <include name="**/*.jar"/>
 		    </fileset>
-		  </copy>		
+		  </copy>
 		  <copy todir="${webstart.dir}">
 		    <fileset dir="${igv.deploy.dir}">
 		      <include name="**/*.jar"/>
 		    </fileset>
-		  </copy>		  
-		  <copy todir="${webstart.dir}">
-		    <fileset dir="${sdk.lib}">
-		      <include name="**/*.jar"/>
-		    </fileset>
-		  </copy>			
+		  </copy>
+		  <!--<copy todir="${webstart.dir}">-->
+		    <!--<fileset dir="${sdk.lib}">-->
+		      <!--<include name="**/*.jar"/>-->
+		    <!--</fileset>-->
+		  <!--</copy>-->
 	</target>
 	
 	
@@ -77,7 +77,8 @@
     	<signjar
     	    alias="${alias}" keystore="${keystore}"
     	    storepass="${store-password}"
-    		keypass="${key-password}"
+            keypass="${key-password}"
+            tsaurl="http://timestamp.entrust.net/TSS/JavaHttpTS"
     	    >
     	  <path>
     	    <fileset dir="${webstart.dir}">
