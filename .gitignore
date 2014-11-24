@@ -11,4 +11,4 @@ pom.xml
 .project
 *.log
 target/
-!./lib
+.idea/
