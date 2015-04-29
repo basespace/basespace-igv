@@ -10,11 +10,11 @@
 
 	<properties>
 		<igv.version>2.3.5</igv.version>
-		<workspace.loc>/development/source/</workspace.loc>
+		<workspace.loc>/home/yh/script/basespace-igv</workspace.loc>
 		<java.sdk.version>2.1.1-SNAPSHOT</java.sdk.version>
-		<igv.root>${workspace.loc}/broad-igv-${igv.version}</igv.root>
+		<igv.root>${workspace.loc}/lib/broad-igv-${igv.version}</igv.root>
 		<igv.dist>${igv.root}/IGV-dist</igv.dist>
-		<java.home>/Library/Java/JavaVirtualMachines/jdk1.7.0_17.jdk/Contents/Home</java.home>
+		<java.home>/home/yh/bin/jdk1.7.0_55</java.home>
 		<application.name>IGV</application.name>				
 	</properties>
 
@@ -49,7 +49,8 @@
 			<groupId>illumina</groupId>
 			<artifactId>basespace-sdk</artifactId>
 			<version>${java.sdk.version}</version>
-			<scope>compile</scope>
+			<scope>system</scope>
+			<systemPath>${workspace.loc}/../basespace-java-sdk/target/basespace-sdk-2.1.1-SNAPSHOT.jar</systemPath>
 		</dependency>
 
 
@@ -68,19 +69,22 @@
 			<groupId>sam</groupId>
 			<artifactId>sam</artifactId>
 			<version>1.91</version>
-			<scope>compile</scope>
+			<scope>system</scope>
+			<systemPath>${igv.root}/lib/sam-1.91.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>tribble</groupId>
 			<artifactId>tribble</artifactId>
 			<version>1.91</version>
-			<scope>compile</scope>
+			<scope>system</scope>
+			<systemPath>${igv.root}/lib/tribble-1.91.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>variant</groupId>
 			<artifactId>variant</artifactId>
 			<version>1.91</version>
-			<scope>compile</scope>
+			<scope>system</scope>
+			<systemPath>${igv.root}/lib/variant-1.91.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>commons-math</groupId>
