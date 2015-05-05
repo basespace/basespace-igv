@@ -45,6 +45,7 @@ public class FileNode extends BaseSpaceTreeNode<FileCompact>
     public FileNode(FileCompact bean,UUID clientId,ClientContext clientContext)
     {
         super(bean,clientId,clientContext);
+        showSize = true;
         popup = new JPopupMenu();
         popup.setOpaque(true);
         popup.setLightWeightPopupEnabled(true);
@@ -61,30 +62,23 @@ public class FileNode extends BaseSpaceTreeNode<FileCompact>
     
     private void initActions()
     {
-        actionsForFileType.put(".vcf",new AbstractAction[]
-                {
-                    viewTrackAction,downloadAction
-                });
-        actionsForFileType.put(".vcf.gz",new AbstractAction[]
-                {
-                    viewTrackAction
-                });        
-        actionsForFileType.put(".bam",new AbstractAction[]
-                {
-                    viewTrackAction
-                });    
-        actionsForFileType.put(".bed",new AbstractAction[]
-                {
-                    viewTrackAction
-                });   
-        actionsForFileType.put(".gtf",new AbstractAction[]
-                {
-                    viewTrackAction,downloadAction
-                });          
-        actionsForFileType.put(".bedgraph.gz",new AbstractAction[]
-                {
-                    viewTrackAction
-                });          
+        for (Map.Entry<String, Integer> entry: BaseSpaceConstants.FILE_TYPES.entrySet()){
+        	String filenameSuffix = entry.getKey();
+        	Integer fileType = entry.getValue();
+        	if (fileType==2){
+        		//index files
+        		actionsForFileType.put(filenameSuffix, new AbstractAction[]
+        				{
+        				downloadAction
+                        });
+        	}
+        	else{
+        		actionsForFileType.put(filenameSuffix, new AbstractAction[]
+        				{
+        				viewTrackAction,downloadAction
+        				});
+        	}
+        }
     }
     
     public boolean hasChildren()
@@ -97,7 +91,12 @@ public class FileNode extends BaseSpaceTreeNode<FileCompact>
     @Override
     protected void doubleClicked()
     {
-        loadTrack();
+    	if (getBean().getName().toLowerCase().endsWith(".tbi") || getBean().getName().toLowerCase().endsWith(".bai") ){
+    		//do not load index files into tracks
+    	}
+    	else{
+    		loadTrack();
+    	}
     }
 
     @Override
@@ -142,13 +141,14 @@ public class FileNode extends BaseSpaceTreeNode<FileCompact>
     {
         //this.tree = tree;
         String iconName = "file.png";
+        
         if (value.getName().toLowerCase().endsWith("vcf"))
         {
             iconName = "vcf.png";
         }
         else if (value.getName().toLowerCase().endsWith("vcf.gz"))
         {
-            iconName = "gzip.png";
+            iconName = "vcf.png";
         }
         else if (value.getName().toLowerCase().endsWith("bam"))
         {
@@ -158,7 +158,7 @@ public class FileNode extends BaseSpaceTreeNode<FileCompact>
         {
             iconName = "bed.png";
         }
-        else if (value.getName().toLowerCase().endsWith("bedgraph.gz"))
+        else if (value.getName().toLowerCase().endsWith(".gz"))
         {
             iconName = "gzip.png";
         }

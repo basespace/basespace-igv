@@ -5,10 +5,11 @@ Thumbs.db
 *.war
 *.ear
 *.tpignore
-pom.xml
+#pom.xml
 .settings/
 .classpath
 .project
 *.log
 target/
 .idea/
+bin/

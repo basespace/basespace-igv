@@ -15,6 +15,7 @@ import com.illumina.basespace.entity.AppResult;
 import com.illumina.basespace.entity.AppResultCompact;
 import com.illumina.basespace.entity.FileCompact;
 import com.illumina.basespace.entity.Reference;
+import com.illumina.basespace.igv.BaseSpaceConstants;
 import com.illumina.basespace.igv.BaseSpaceMain;
 import com.illumina.basespace.igv.BaseSpaceMain.ClientContext;
 import com.illumina.basespace.igv.BaseSpaceUtil;
@@ -45,7 +46,7 @@ public class AppResultNode extends BaseSpaceTreeNode<AppResultCompact>
             protected List<FileCompact> doInBackground() throws Exception
             {
                 List<FileCompact> entities = new ArrayList<FileCompact>();
-                FileParams fileParams = new FileParams(new String[]{".bam",".bai",".vcf",".gz",".tbi",".bed",".gtf"},128);
+                FileParams fileParams = new FileParams(BaseSpaceConstants.FILE_TYPES.keySet().toArray(new String[0]), 128);
                 entities.addAll(Arrays.asList(BaseSpaceMain.instance().getApiClient(getClientId()).getFiles(getBean(), fileParams).items()));
                 return entities;
             }
@@ -60,6 +61,11 @@ public class AppResultNode extends BaseSpaceTreeNode<AppResultCompact>
                     List<BaseSpaceTreeNode<?>> decorators = new ArrayList<BaseSpaceTreeNode<?>>(list.size());
                     for (FileCompact obj : list)
                     {
+                    	String suffix = "";
+                    	int suffixStartIdx = obj.getName().lastIndexOf(".");
+                        if (suffixStartIdx != -1)
+                        	suffix = obj.getName().substring(suffixStartIdx);
+                        
                        if (obj.getName().toLowerCase().endsWith(".bam"))
                        {
                     	   FileCompact indexFile =  BaseSpaceUtil.findFile(obj.getName() + ".bai", list);
@@ -89,6 +95,22 @@ public class AppResultNode extends BaseSpaceTreeNode<AppResultCompact>
                            decorators.add(new FileNode(obj,getClientId(),getClientContext()));
                        }
                        else if (obj.getName().toLowerCase().endsWith(".gtf"))
+                       {
+                           decorators.add(new FileNode(obj,getClientId(),getClientContext()));
+                       }
+                       else if (obj.getName().toLowerCase().endsWith(".tdf"))
+                       {
+                           decorators.add(new FileNode(obj,getClientId(),getClientContext()));
+                       }
+                       else if (obj.getName().toLowerCase().endsWith(".bw"))
+                       {
+                           decorators.add(new FileNode(obj,getClientId(),getClientContext()));
+                       }
+                       else if (obj.getName().toLowerCase().endsWith(".gz"))
+                       {
+                           decorators.add(new FileNode(obj,getClientId(),getClientContext()));
+                       }
+                       else if (BaseSpaceConstants.FILE_TYPES.containsKey(suffix))
                        {
                            decorators.add(new FileNode(obj,getClientId(),getClientContext()));
                        }

@@ -17,7 +17,7 @@ public class LocalDownloadLocatorFactory  implements IResourceLocatorFactory<Loc
     public LocalDownloadTrackLoader newLocator(UUID clientId,ApiClient client,File check, List<FileCompact> filesInDirectory)
     {
         String nameLower = check.getName().toLowerCase();
-        if (nameLower.endsWith(".bed"))
+        if (nameLower.endsWith(".bed") || nameLower.endsWith(".tdf") || nameLower.endsWith(".bw") )
         {
             return new LocalDownloadTrackLoader(clientId, check);
         }
@@ -30,7 +30,7 @@ public class LocalDownloadLocatorFactory  implements IResourceLocatorFactory<Loc
         
         public LocalDownloadTrackLoader(UUID clientId, File file)
         {
-            super(clientId, file,".bed");
+            super(clientId, file, null);	//".bed"
         }
 
         @Override

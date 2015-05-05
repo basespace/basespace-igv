@@ -210,7 +210,7 @@ public class BaseSpaceMain extends Main implements SingleInstanceListener
         if (appResultId != null)
         {
             AppResultCompact appResult = new AppResultCompact(appResultId);
-            FileParams fileParams = new FileParams(new String[] { ".bam", ".bai", ".vcf" }, 10);
+            FileParams fileParams = new FileParams(BaseSpaceConstants.FILE_TYPES.keySet().toArray(new String[0]), 10);
             ListFilesResponse resp = client.getFiles(appResult, fileParams);
             BaseSpaceTrackLoader.loadTracks(id, resp);
         }

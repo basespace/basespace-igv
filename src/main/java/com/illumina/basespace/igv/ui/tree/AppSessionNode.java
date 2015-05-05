@@ -57,7 +57,8 @@ public class AppSessionNode extends BaseSpaceTreeNode<AppSessionCompact>
     {
         final BaseSpaceTreeNode<?> treeNode = this;
         BrowserDialog.instance().workInit(100);
-        final FileParams fileParams = new FileParams(BaseSpaceConstants.FILE_TYPES,128);
+        final FileParams fileParams = new FileParams(BaseSpaceConstants.FILE_TYPES.keySet().toArray(new String[0]), 
+        		128);
         final String thisAppResultId = appResultId;
         
         SwingWorker< List<BaseSpaceTreeNode<?>>,ProgressReport> worker = new SwingWorker< List<BaseSpaceTreeNode<?>>,ProgressReport>()
