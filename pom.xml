@@ -6,16 +6,16 @@
 	<artifactId>basespace-igv-integration</artifactId>
 	<name>basespace-igv-integration</name>
 	<packaging>jar</packaging>
-	<version>2.1.1</version>
+	<version>2.1.2</version>
 
 	<properties>
 		<igv.version>2.3.5</igv.version>
-		<workspace.loc>/home/yh/script/basespace-igv</workspace.loc>
+		<workspace.loc>/media/sf_linux/git/basespace-igv</workspace.loc>
 		<java.sdk.version>2.1.1-SNAPSHOT</java.sdk.version>
 		<igv.root>${workspace.loc}/lib/broad-igv-${igv.version}</igv.root>
 		<igv.dist>${igv.root}/IGV-dist</igv.dist>
-		<java.home>/home/yh/bin/jdk1.7.0_55</java.home>
-		<application.name>IGV</application.name>				
+		<application.name>IGV</application.name>
+		<java.home>/usr/lib/jvm/java-7-oracle</java.home>
 	</properties>
 
 	<repositories>
