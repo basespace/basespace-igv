@@ -8,8 +8,7 @@ The BaseSpace file browser shows data in BaseSpace that is available for viewing
 
 A Project is the highest level directory and it contains one or more AppResults. If an AppResult was the result of analyzing a single sample, then the sample name is appended to the AppResult name. Each AppResult contains zero or more files. 
 
-Only alignment (BAM) and variant (VCF) files are shown in the file browser. Double click a BAM or VCF file to load it as an IGV track. First load VCF files before BAM files since read tracks can take up an entire IGV screen, which requires scrolling to see variants.
-
+Alignment (BAM), variant (VCF), BigWig (BW), BED, and BedGraph files are shown in the file browser. Double click a file to load it as an IGV track.
 
 **BaseSpace Data Permissions**
 
@@ -43,3 +42,7 @@ E. coli (strain DH10B): ftp://igenome:G3nom3s4u@ussd-ftp.illumina.com/Escherichi
 For E. coli, rename the first line in genome.fa from ‘>chr’ to ‘>ecoli’
 
 Other genomes or custom genomes are not available at this time.
+
+**Compiling**
+
+See https://confluence.illumina.com/display/PAT/Basespace+IGV
