@@ -27,7 +27,6 @@ public class LocalDownloadLocatorFactory  implements IResourceLocatorFactory<Loc
    
     public class LocalDownloadTrackLoader extends BaseSpaceResourceLocator implements IBaseSpaceTrackLoader<LocalDownloadTrackLoader>
     {
-        
         public LocalDownloadTrackLoader(UUID clientId, File file)
         {
             super(clientId, file, null);	//".bed"
@@ -48,8 +47,12 @@ public class LocalDownloadLocatorFactory  implements IResourceLocatorFactory<Loc
             {
                 throw new RuntimeException("Error loading " + locator.getFile().getName(), t);
             }
-            
         }
-
+        // the local file has the file ID prefixed - this gives it a nicer display name
+        @Override
+        public String getTrackName()
+        {
+            return getFileName();
+        }
     }
 }

@@ -91,19 +91,20 @@ public class BaseSpaceResourceLocator extends ResourceLocator
         try
         {
             java.io.File localFile = getCachedLocalFile(file);
-    
+
             // Crude staleness check -- if more than a day old discard
             long age = System.currentTimeMillis() - localFile.lastModified();
             if (age > oneDay)
             {
                 localFile.delete();
             }
-    
+
             if (!localFile.exists() || localFile.length() < 1)
             {
                 log.info("Downloading file from BaseSpace->" + file.getName() + " to " + localFile.toString());
                 ApiClient client = BaseSpaceMain.instance().getApiClient(getClientId());
                 BaseSpaceUtil.downloadFile(client, file, localFile);
+                // TODO: This doesn't actually work because the file is left open
                 localFile.deleteOnExit();
             }
     
@@ -122,7 +123,8 @@ public class BaseSpaceResourceLocator extends ResourceLocator
         if (localFile == null)
         {
             localFile = new java.io.File(DirectoryManager.getCacheDirectory()
-                    + java.io.File.separator + file.getName());
+                    + java.io.File.separator + file.getId() + "_" + file.getName());
+            // TODO: This doesn't actually work because the file is left open
             localFile.deleteOnExit();
             fileCache.put(file.getId(), localFile);
         }
